@@ -1,0 +1,296 @@
+<html>
+    <head>
+        <script src="https://unpkg.com/@webex/embedded-app-sdk@latest" defer></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+        <script src="https://kit.fontawesome.com/f4a0e6453b.js" crossorigin="anonymous"></script>
+        <style>
+            .column.is-centered {
+              display: flex;
+              justify-content: center;
+            }
+
+            .custom-cell {
+              line-height: 40px;
+            }
+
+            .row-item {
+              background-color: white;
+            }
+
+            body {
+              height:100%;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+
+            .theme-light  {
+              background-color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header-box" class="columns is-centered is-info mt-0">
+            <div class="column is-1 is-centered py-2">
+              <div class="dropdown is-left is-active">
+                <div class="dropdown-trigger">
+                  <button id="settings-button" class="button" aria-haspopup="true" aria-controls="theme-menu" style="display:none;">
+                    <span class="icon">
+                      <i class="fas fa-gear" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="settings-menu" role="menu" style="display:none;">
+                  <div id="settings-menu-content" class="dropdown-content">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-3 is-centered py-0">
+                <div class="column is-narrow is-centered py-2">
+                  <figure class="image">
+                      <img id="logo" style="border-radius:10px;"></img>
+                  </figure>
+                </div>
+            </div>
+            <div class="column is-centered py-2">
+                <h1 id='main-title' class="title"></h1>
+            </div>
+            <div class="column is-1 is-centered py-0"></div>
+            <div class="column is-2 is-centered py-2">
+              <button class="button is-static">
+                <span class="icon">
+                  <i class="fas fa-phone" aria-hidden="true"></i>
+                </span>
+                <span id="main-state">Ready</span>
+              </button>
+            </div>
+            <div class="column is-1 is-centered py-2 mx-5">
+              <div class="dropdown is-right is-active">
+                <div class="dropdown-trigger">
+                  <button id="theme-button" class="button" aria-haspopup="true" aria-controls="theme-menu">
+                    <span>Theme</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-palette" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="theme-menu" role="menu" style="display:none;">
+                  <div class="dropdown-content">
+                    <a id="light-blue" href="#" class="dropdown-item is-selected" style="color: hsl(var(--bulma-info-h),var(--bulma-info-s),var(--bulma-info-l))!important;background-color:white;"><span>Light Blue</span></a>
+                    <a id="dark-blue" href="#" class="dropdown-item has-background-black-ter" style="color: hsl(var(--bulma-info-h),var(--bulma-info-s),var(--bulma-info-l))!important;"><span>Dark Blue</span></a>
+                    <a id="light-orange" href="#" class="dropdown-item" style="color:#ff7900;background-color:white;"><span>Light Orange</span></a>
+                    <a id="dark-orange" href="#" class="dropdown-item has-background-black-ter" style="color:#ff7900"><span>Dark Orange</span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="columns is-centered mb-0">
+            <div class="column is-three-quarters">
+                <article class="message is-info">
+                    <div id="call-behavior-message" class="message-body" style="display:none;"></div>
+                </article>
+            </div>
+        </div>
+        <div id="script-div" class="notification mx-5">
+          <h2 id="script" class="subtitle is-3"></h2>
+        </div>
+        <div id="main-content" style="display:none;">
+          <div class="mx-5">
+            <h2 class="subtitle is-4">Company Profile</h2>
+            <div class="columns ml-0">
+              <div class="column is-two-fifths">
+                <div id="first-column" class="columns is-multiline">
+                </div>
+              </div>
+              <div class="column is-three-fifths">
+                <div id="second-column" class="columns is-multiline">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mx-5 mt-6">
+            <h2 class="subtitle is-4 my-1">Company Contacts</h2>
+            <div id="actions">
+              <table class="table">
+                <tbody id="contacts">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered mb-0">
+            <div class="column is-three-quarters">
+                <article id="caller-info" class="" style="display:none;">
+                    <div class="message-header">
+                        <p>Caller Information</p>
+                        <button id="delete-caller-info" class="delete" aria-label="delete"></button>
+                    </div>
+                    <nav class="panel">
+                        <a class="panel-block row-item">
+                          <span class="panel-icon">
+                            <i class="fas fa-hashtag" aria-hidden="true"></i>
+                          </span>
+                          <p id="call-id">CallId</p>
+                        </a>
+                        <a class="panel-block row-item is-active">
+                          <span class="panel-icon">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                          </span>
+                          <p id="caller-id">CallerId</p>
+                        </a>
+                        <a class="panel-block row-item">
+                          <span class="panel-icon">
+                            <i class="fas fa-table-list" aria-hidden="true"></i>
+                          </span>
+                          <p id="call-type">CallType</p>
+                        </a>
+                        <a class="panel-block row-item">
+                          <span class="panel-icon">
+                            <i class="fas fa-bookmark" aria-hidden="true"></i>
+                          </span>
+                          <p id="call-state">CallState</p>
+                        </a>
+                    </nav>
+                </article>
+            </div>
+        </div>
+        <div id="api-info-div" class="columns is-centered" style="display:none;">
+            <div class="column is-three-quarters">
+                <article id="api-info" class="">
+                    <div class="message-header">
+                        <p id="api-title">API / DB Information (Caller)</p>
+                        <button id="delete-api-info" class="delete" aria-label="delete"></button>
+                    </div>
+                    <nav class="panel">
+                        <a id="api-name" class="panel-block row-item">
+                          <span class="panel-icon">
+                            <i class="fas fa-address-card" aria-hidden="true"></i>
+                          </span>
+                          <p id="api-name-text">Name</p>
+                        </a>
+                        <a id="api-email" class="panel-block row-item">
+                            <span class="panel-icon">
+                              <i class="fas fa-regular fa-envelope" aria-hidden="true"></i>
+                            </span>
+                            <p id="api-email-text">Email</p>
+                        </a>
+                        <a id="api-company" class="panel-block row-item">
+                          <span class="panel-icon">
+                            <i class="fas fa-regular fa-building" aria-hidden="true"></i>
+                          </span>
+                          <p id="api-company-text">Company</p>
+                      </a>
+                        <a id="api-link" class="panel-block row-item" style="display: none;">
+                            <span class="panel-icon">
+                              <i class="fas fa-regular fa-link" aria-hidden="true"></i>
+                            </span>
+                            <p id="api-link-text">Link</p>
+                        </a>
+                    </nav>
+                </article>
+            </div>
+        </div>
+        <div id="modal-error" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head py-4">
+                  <p class="modal-card-title has-text-danger">Error!</p>
+                  <button id="modal-error-close" class="delete close" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <p id="modal-error-text" class="modal-card-title"></p>
+                </section>
+                <footer class="modal-card-foot py-4">
+                  <div class="buttons">
+                    <button id="modal-error-close-lower" class="button close">Close</button>
+                  </div>
+                </footer>
+            </div>
+        </div>
+        <div id="modal-delete-confirm" class="modal" style="z-index:10;">
+            <div class="modal-background"></div>
+            <div class="modal-card" style="overflow:visible;">
+                <header class="modal-card-head py-4">
+                  <p class="modal-card-title has-text-warning">Warning</p>
+                  <button id="modal-delete-confirm-close" class="delete close" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <p id="modal-delete-confirm-text" class="modal-card-title"></p>
+                </section>
+                <footer class="modal-card-foot py-2">
+                  <div class="columns" style="width:100%;">
+                    <div class="column is-4 pr-0">
+                      <button id="modal-delete-confirm-delete" class="button is-danger">Delete</button>
+                      <button id="modal-delete-confirm-close-lower" class="button close">Cancel</button>
+                    </div>
+                    <div id="modal-delete-confirm-error" class="column is-8 has-text-danger has-text-weight-medium mt-2">
+                    </div>
+                  </div>
+                </footer>
+            </div>
+        </div>
+        <div id="modal-settings" class="modal" style="z-index:0;">
+            <div class="modal-background"></div>
+            <div class="modal-card" style="width:97%;">
+                <header class="modal-card-head py-2">
+                  <p class="modal-card-title">Admin</p>
+                  <button id="modal-settings-close" class="delete close" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                  <div class="mx-5">
+                    <h2 class="subtitle is-4">Company Profile</h2>
+                    <div id="script-settings-div" class="columns ml-0 mb-6"></div>
+                    <div class="columns ml-0">
+                      <div class="column is-two-fifths">
+                        <div id="first-column-settings" class="columns is-multiline">
+                        </div>
+                      </div>
+                      <div class="column is-three-fifths">
+                        <div id="second-column-settings" class="columns is-multiline">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mx-5 mt-6">
+                    <h2 class="subtitle is-4 my-1">Company Contacts</h2>
+                    <div id="actions-settings">
+                      <table class="table mb-1">
+                        <tbody id="contacts-settings">
+                        </tbody>
+                      </table>
+                      <button id="action-add" class="button ml-3">
+                        <span class="icon"><i class="fas fa-plus" aria-hidden="true"></i></span>
+                    </div>
+                  </div>
+                </section>
+                <footer class="modal-card-foot py-2">
+                  <div class="columns" style="width:100%;">
+                    <div class="column is-3 pr-0">
+                      <button id="modal-settings-save" class="button is-info">Save</button>
+                      <button id="modal-settings-close-lower" class="button close">Cancel</button>
+                    </div>
+                    <div id="modal-settings-error" class="column is-5 has-text-weight-medium mt-2 pl-0">
+                    </div>
+                    <div class="column is-2"></div>
+                    <div class="column is-2">
+                      <button id="modal-settings-delete" class="button is-danger">Delete Profile</button>
+                    </div>
+                  </div>
+                </footer>
+            </div>
+        </div>
+    </body>
+    <script crossorigin src="https://unpkg.com/webex@^3/umd/webex.min.js"></script>
+    <script crossorigin src="https://cdn.jsdelivr.net/npm/webex@3.7.0/umd/webex.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- <script src="https://unpkg.com/webex/umd/calling.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/config.js" defer></script>
+    <script type="text/javascript" src="js/calling_functions.js" defer></script>
+    <script type="text/javascript" src="js/ea_functions.js" defer></script>
+    <script type="text/javascript" src="js/functions.js" defer></script>
+    <script type="text/javascript" src="js/index.js" defer></script>
+</html>

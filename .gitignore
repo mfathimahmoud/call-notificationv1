@@ -1,0 +1,8 @@
+.DS_STORE
+*.old
+*.env
+*.yaml
+SCREENSHOT.jpg
+package-lock.json
+notes
+node_modules/
