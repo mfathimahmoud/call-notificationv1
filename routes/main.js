@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
       res.status(500).send('Internal server error');
     }
   } else {
-    const redirectUri = getAuthorizationUrl(encodeURIComponent(req.url));
+    const redirectUri = getAuthorizationUrl(req.url);
     console.log('redirectUri:', redirectUri);
     res.redirect(redirectUri);
   }
