@@ -42,10 +42,7 @@ router.post('/agent_webhook', async (req, res) => {
         };
         
         console.log("Emitting message to:", req.body.actorId);
-        
-        // Note: This requires the io instance to be passed in or made available
-        // You'll need to import this or pass it as a parameter
-        // req.app.get('io').to(req.body.actorId).emit('message', data);
+        req.app.get('io').to(req.body.actorId).emit('message', data);
       }
     } catch (error) {
       console.log('/agent_webhook exception:', error);

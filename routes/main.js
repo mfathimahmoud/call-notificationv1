@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { config, isMercuryMode } from '../lib/config.js';
 import { getAuthorizationUrl, getAccessToken, isUserAdmin } from '../lib/webexService.js';
-import { requireAuth, requestLogger } from '../lib/auth.js';
+import { requestLogger } from '../lib/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

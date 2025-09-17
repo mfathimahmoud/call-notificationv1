@@ -30,9 +30,6 @@ const io = new Server(server);
 //  - This is a challenge.  Current method might depend on webhook mode, because getting an active call with API doesn't show redirections.
 //  -                       SDK doesn't appear to recognize any calls answered outside of it.
 
-//4. Test in Docker/Prod
-//5. Push to Git
-
 //TODO Any time goals:
 //?. When multiple agents receive the same calls... do we want to cache the DB pull?
 //?. Add Call Logs button - this means a call logs display as well...

@@ -67,7 +67,6 @@ if(mercuryMode){
                             let remoteNumber = event.data.remoteParty.number;
                             let remoteName = event.data.remoteParty.name;
                             let url = `/db?queueNumber=${encodeURIComponent(queueNumber)}&remoteNumber=${encodeURIComponent(remoteNumber)}`
-                            //let url = `/db?queueNumber=1&remoteNumber=2`
                             console.log(`url:${url}`);
                             let response = await fetch(url);
                             console.log('response:');
@@ -195,27 +194,5 @@ window.addEventListener('load', async function () {
             });
         });
     });
-    
-
-    // const calling = await Calling.init({ webexConfig:getWebexConfig(accessToken), 
-    //                                    callingConfig:getCallingConfig() });
-    // calling.on('ready', () => {
-    //     customLog("Calling Ready");
-    //     calling.register().then(() => {
-    //         customLog("Calling Registered");
-    //         try{
-    //             callingClient = calling.callingClient;
-    //             line = Object.values(callingClient.getLines())[0];
-    //             line.on('registered', (lineInfo) => {
-    //                 customLog('Line information: ', lineInfo);
-    //             });
-    //             line.register();
-    //         }catch(e){
-    //             showLoadError("Line registration error.");
-    //             customLog("Line register error:");
-    //             customLog(e);
-    //         }
-    //     });
-    // });
 
 });
