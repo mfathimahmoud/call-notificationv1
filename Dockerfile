@@ -15,6 +15,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-COPY prod.env .env
+#COPY prod.env .env
 
 CMD [ "npm", "start" ]
