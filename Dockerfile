@@ -16,6 +16,5 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 #COPY prod.env .env
-# Expose port 8080 (this is what Azure expects)
-EXPOSE 8080
+
 CMD [ "npm", "start" ]
