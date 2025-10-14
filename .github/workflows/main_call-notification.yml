@@ -27,7 +27,7 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          #npm run test --if-present
+          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -51,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5079CD2F951E43EB95A4D2798C39E7B8 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A6CC7EF08DFB4DA3B84D0A460991AA11 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1A089B6D8298447B8F69F2961EB1B7CE }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6C1B2CA4D3FD4E57AB4DADFE12DE2E7A }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_913F85AB15914CB59740C3AFC6DBD6E8 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B846669B0F5C4882B50C1490AB8A7DE7 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -62,5 +62,4 @@ jobs:
           app-name: 'call-notification'
           slot-name: 'Production'
           package: .
-
           
