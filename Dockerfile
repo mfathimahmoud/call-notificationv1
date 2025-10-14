@@ -17,5 +17,5 @@ RUN npm install
 COPY . .
 #COPY prod.env .env
 #ENV PORT=8080
-#EXPOSE 8080
+EXPOSE 8080
 CMD [ "npm", "start" ]
