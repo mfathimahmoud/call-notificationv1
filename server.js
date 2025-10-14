@@ -60,6 +60,7 @@ async function startServer() {
     setupSocketHandlers(io);
     
     // Start server
+    const port = process.env.PORT || config.port || 8080;
     server.listen(config.port, () => {
       console.log(`Server listening on port ${config.port}`);
       console.log("Mercury Mode:", isMercuryMode());
