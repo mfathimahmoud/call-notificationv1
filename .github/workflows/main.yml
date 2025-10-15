@@ -21,7 +21,7 @@ jobs:
         
       - name: Build Docker image
         run: |
-          docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} .
+          docker build . -t ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Push Docker image
         run: |
