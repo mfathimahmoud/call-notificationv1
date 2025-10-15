@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  REGISTRY_LOGIN_SERVER: callnotifiacr.azurecr.io
+  REGISTRY_LOGIN_SERVER: acrcall.azurecr.io
   IMAGE_NAME: callnotification
   AZURE_WEBAPP_NAME: call-notificationv1
   AZURE_RESOURCE_GROUP: call-notifi_rg
