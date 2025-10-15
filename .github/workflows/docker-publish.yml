@@ -34,11 +34,11 @@ jobs:
         run: |
           docker push $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App (via Deployment Center)
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          images: ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          images: ${{ env.IMAGE_NAME }}:latest
 
       - name: Set PORT environment variable (5000)
         run: |
