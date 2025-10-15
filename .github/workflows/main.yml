@@ -6,10 +6,10 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: ${{ secrets.WEBAPP_NAME }}
-  AZURE_RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
-  REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+  REGISTRY_LOGIN_SERVER: callnotifiacr.azurecr.io
   IMAGE_NAME: callnotification
+  AZURE_WEBAPP_NAME: call-notificationv1
+  AZURE_RESOURCE_GROUP: call-notifi_rg
 
 jobs:
   build-and-deploy:
@@ -25,7 +25,7 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
+          docker push ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
