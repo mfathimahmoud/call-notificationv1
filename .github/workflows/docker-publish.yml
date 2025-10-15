@@ -23,8 +23,8 @@ jobs:
         uses: azure/docker-login@v2
         with:
           login-server: ${{ env.REGISTRY_LOGIN_SERVER }}
-          username: "acrcall"
-          password: "8smrRzPq8wvdV+VG5Nxr2dO732CaZFX9LZurqPYN3d+ACRCELbbY"
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSW0RD }}
 
       - name: Build Docker image
         run: |
