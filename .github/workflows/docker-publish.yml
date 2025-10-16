@@ -35,9 +35,9 @@ jobs:
           docker push $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
 
       - name: Log in to Azure
-        uses: azure/login@v1
+        uses: azure/webapps-deploy@v3
         with:
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8CC2878FC81C44959FEAD855D0A56861 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
