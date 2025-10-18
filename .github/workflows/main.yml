@@ -34,8 +34,9 @@ jobs:
 
       # 4️⃣ Build Docker image
       - name: Build Docker image
-        run: |
-          docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} .
+        run: | 
+          Build Docker image run: docker build ./app -t ${{ env.IMAGE_NAME }}:latest
+          working-directory: ${{ github.workspace }} docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} .
 
       # 5️⃣ Push image to ACR
       - name: Push Docker image
