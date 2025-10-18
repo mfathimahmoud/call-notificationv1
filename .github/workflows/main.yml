@@ -16,34 +16,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout source
         uses: actions/checkout@v4
-        
+
+      # 2️⃣ Login to Azure
       - name: Azure Login
-        uses: azure/webapps-deploy@v3
+        uses: azure/login@v2
         with:
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-      
-      - name: Log in to Azure Container Registry
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # 3️⃣ Login to Azure Container Registry (ACR)
+      - name: Log in to ACR
         run: |
           echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ env.REGISTRY_LOGIN_SERVER }} \
             --username ${{ secrets.ACR_USERNAME }} --password-stdin
 
+      # 4️⃣ Build Docker image
       - name: Build Docker image
         run: |
-          - name: Build Docker image
-            run: docker build ./app -t ${{ env.IMAGE_NAME }}:latest
-            working-directory: ${{ github.workspace }}
-            docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} .
-      
+          docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} .
+
+      # 5️⃣ Push image to ACR
       - name: Push Docker image
         run: |
           docker push $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
-     
+
+      # 6️⃣ Deploy to Azure Web App (container)
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           images: ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-
