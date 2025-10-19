@@ -4,7 +4,7 @@
 # docker build -t call-notifications-sidebar .
 # docker run --init -i -p 10031:10031 -t call-notifications-sidebar
 # docker save call-notifications-sidebar -o call-notifications-sidebar.tar
-############################################################
+#############################################################
 
 FROM node:23.8.0
 LABEL maintainer="Taylor Hanson <tahanson@cisco.com>"
