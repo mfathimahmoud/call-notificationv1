@@ -28,5 +28,6 @@ COPY . .
 
 EXPOSE 5000 2222
 
-CMD ["bash", "-c", "service ssh start && npm start"]
+#CMD ["bash", "-c", "service ssh start && npm start"]
+CMD ["bash", "-c", "/usr/sbin/sshd -D & exec npm start"]
 
