@@ -11,7 +11,7 @@ RUN npm install --production
 
 # Copy app source
 COPY . .
-
+USER node
 # Expose web app port + Azure SSH port (2222 for App Service)
 EXPOSE 5000 2222
 
