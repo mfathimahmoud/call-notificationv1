@@ -3,7 +3,7 @@ FROM node:23.8.0
 LABEL maintainer="Taylor Hanson <tahanson@cisco.com>"
 
 # Set working directory
-WORKDIR /
+WORKDIR /workspace
 
 # Copy dependency files and install only production deps
 COPY package*.json ./
