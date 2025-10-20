@@ -10,12 +10,22 @@ FROM node:23.8.0
 LABEL maintainer="Taylor Hanson <tahanson@cisco.com>"
 
 # Install SSH
+# RUN apt-get update && apt-get install -y openssh-server && \
+#     mkdir /var/run/sshd && \
+#     echo 'root:Docker!' | chpasswd && \
+#     sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config && \
+#     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+#     sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+#     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# 1️⃣ Install SSH and create non-root user
 RUN apt-get update && apt-get install -y openssh-server && \
     mkdir /var/run/sshd && \
+    useradd -m appuser && echo 'appuser:Docker!' | chpasswd && \
     echo 'root:Docker!' | chpasswd && \
-    sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    echo "Port 2222" >> /etc/ssh/sshd_config && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace
