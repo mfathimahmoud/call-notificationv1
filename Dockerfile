@@ -1,43 +1,20 @@
-############################################################
-# Dockerfile to build Call Notifications Sidebar App
-############################################################
-# docker build -t call-notifications-sidebar .
-# docker run --init -i -p 10031:10031 -t call-notifications-sidebar
-# docker save call-notifications-sidebar -o call-notifications-sidebar.tar
-#############################################################
-
+# Base image
 FROM node:23.8.0
 LABEL maintainer="Taylor Hanson <tahanson@cisco.com>"
 
-# Install SSH
-# RUN apt-get update && apt-get install -y openssh-server && \
-#     mkdir /var/run/sshd && \
-#     echo 'root:Docker!' | chpasswd && \
-#     sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config && \
-#     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-#     sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-#     apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# 1️⃣ Install SSH and create non-root user
-RUN apt-get update && apt-get install -y openssh-server && \
-    mkdir /var/run/sshd && \
-    useradd -m appuser && echo 'appuser:Docker!' | chpasswd && \
-    echo 'root:Docker!' | chpasswd && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    echo "Port 2222" >> /etc/ssh/sshd_config && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
+# Set working directory
 WORKDIR /workspace
 
-# Copy app files
+# Copy dependency files and install only production deps
 COPY package*.json ./
 RUN npm install --production
 
+# Copy app source
 COPY . .
 
+# Expose web app port + Azure SSH port (2222 for App Service)
 EXPOSE 5000 2222
 
-#CMD ["bash", "-c", "service ssh start && npm start"]
-CMD ["bash", "-c", "/usr/sbin/sshd -D & exec npm start"]
-
+# Azure automatically handles SSH — don't start your own sshd.
+# Just start the Node.js app.
+CMD ["npm", "start"]
