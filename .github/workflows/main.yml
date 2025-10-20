@@ -32,18 +32,17 @@ jobs:
           echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ env.REGISTRY_LOGIN_SERVER }} \
             --username ${{ secrets.ACR_USERNAME }} --password-stdin
 
-      # 4️⃣ Build Docker image
+    # 4️⃣ Build and tag Docker image
       - name: Build Docker image
         run: |
           docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} .
 
-
-      # 5️⃣ Push image to ACR
+# 5️⃣ Push image to ACR
       - name: Push Docker image
         run: |
           docker push $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
 
-      # 6️⃣ Deploy to Azure Web App (container)
+# 6️⃣ Deploy to Azure Web App (container)
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
