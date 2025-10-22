@@ -17,4 +17,5 @@ EXPOSE 5000
 
 # Azure automatically handles SSH — don't start your own sshd.
 # Just start the Node.js app.
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
+CMD service ssh start && npm start
