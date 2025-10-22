@@ -35,7 +35,8 @@ jobs:
     # 4️⃣ Build and tag Docker image
       - name: Build Docker image
         run: |
-          docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} \ -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:latest .
+          docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} \
+          -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:latest .
 
 # 5️⃣ Push image to ACR
       - name: Push Docker image
