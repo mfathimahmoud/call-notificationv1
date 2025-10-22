@@ -13,7 +13,7 @@ RUN npm install --production
 COPY . .
 USER node
 # Expose web app port + Azure SSH port (2222 for App Service)
-EXPOSE 5000 2222
+EXPOSE 5000
 
 # Azure automatically handles SSH — don't start your own sshd.
 # Just start the Node.js app.
