@@ -35,17 +35,18 @@ jobs:
     # 4️⃣ Build and tag Docker image
       - name: Build Docker image
         run: |
-          docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} .
+          docker build -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} \ -t $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:latest .
 
 # 5️⃣ Push image to ACR
       - name: Push Docker image
         run: |
           docker push $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
+          docker push $REGISTRY_LOGIN_SERVER/$IMAGE_NAME:latest
 
 # 6️⃣ Deploy to Azure Web App (container)
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          images: ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          images: ${{ env.REGISTRY_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
