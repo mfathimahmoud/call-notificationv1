@@ -60,11 +60,16 @@ async function startServer() {
     setupSocketHandlers(io);
     
     // Start server
+    // const port = process.env.PORT || config.port || 5000;
+    // server.listen(config.port, () => {
+    //   console.log(`Server listening on port ${config.port}`);
+    //   console.log("Mercury Mode:", isMercuryMode());
+    // });
     const port = process.env.PORT || config.port || 5000;
-    server.listen(config.port, () => {
-      console.log(`Server listening on port ${config.port}`);
-      console.log("Mercury Mode:", isMercuryMode());
+    server.listen(port, () => {
+      console.log(`Server listening on port ${port}`);
     });
+
   } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);
