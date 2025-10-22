@@ -4,6 +4,8 @@ LABEL maintainer="Taylor Hanson <tahanson@cisco.com>"
 
 # Set working directory
 WORKDIR /workspace
+RUN apt-get update && apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
 
 # Copy dependency files and install only production deps
 COPY package*.json ./
@@ -17,5 +19,6 @@ EXPOSE 5000 2222
 
 # Azure automatically handles SSH — don't start your own sshd.
 # Just start the Node.js app.
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
 #CMD service ssh start && npm start
+CMD ["/bin/sh", "-c", "service ssh start && npm start"]
